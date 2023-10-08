@@ -1,6 +1,9 @@
-﻿namespace UserRoleTest.Services
+﻿using UserRoleTest.Interfaces;
+
+namespace UserRoleTest.Services
 {
-    public class RoleService
+    public class RoleService : IRoleService
     {
+        
     }
 }
