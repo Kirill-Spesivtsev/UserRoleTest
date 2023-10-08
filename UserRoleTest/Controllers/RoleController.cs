@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UserRoleTest.Interfaces;
 
 namespace UserRoleTest.Controllers
 {
@@ -7,5 +8,8 @@ namespace UserRoleTest.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
+        
+
+
     }
 }

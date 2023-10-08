@@ -1,12 +1,16 @@
-﻿namespace UserRoleTest.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UserRoleTest.Models
 {
     public class Role
     {
-        public Guid Id {get; set;}
+
+        [Key]
+        public int Id {get; set;}
 
         public string Name {get; set;}
 
-        public List<Role> Users {get; set;} = new();
+        public List<User> Users {get; set;} = new();
 
     }
 }

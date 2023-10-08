@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using UserRoleTest.Interfaces;
 
 namespace UserRoleTest.Controllers
 {
@@ -7,6 +7,6 @@ namespace UserRoleTest.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        
+
     }
 }
