@@ -13,14 +13,18 @@ namespace UserRoleTest.Services
             _context = context;
         }
 
-        public async Task<List<User>> GetAllUsers() => await _context?.Users?.Include(q => q.Roles)?.ToListAsync()!;
+        public async Task<List<User>> GetAllUsers() =>
+            await _context?.Users?.Include(q => q.UserRoles).ThenInclude(q => q.Role).ToListAsync()!;
+
+            
 
 
         public async Task<User> GetUserById(int? userId)
         {
             if (_context != null && userId != null)
             {
-                return await _context.Users.Include(q => q.Roles).FirstAsync(x => x.Id == userId);
+                return await _context.Users
+                    .Include(q => q.UserRoles).ThenInclude(q => q.Role).FirstAsync(x => x.Id == userId);
             }
             return null!;
 
@@ -80,6 +84,18 @@ namespace UserRoleTest.Services
             }
 
             return 1;
+        }
+
+        public async Task<int> AddUserToRole(int? userId, int? roleId)
+        {
+            if (_context != null)
+            {
+                var record = new UserRole{UserId = userId.Value, RoleId = roleId.Value};
+                await _context.UserRoles.AddAsync(record);
+                await _context.SaveChangesAsync();
+                return record.Id;
+            }
+            return 0;
         }
 
     }

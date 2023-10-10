@@ -14,6 +14,8 @@ namespace UserRoleTest.Interfaces
         Task<int> DeleteUser(int? userId);
 
         Task<int> UpdateUser(int? userId, User user);
+
+        Task<int> AddUserToRole(int? userId, int? roleId);
     
     }
     

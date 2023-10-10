@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace UserRoleTest.Models
 {
@@ -17,6 +18,6 @@ namespace UserRoleTest.Models
         [Required(ErrorMessage = "Please fill in the the Email")]
         public string Email {get; set;}
 
-        public List<Role> Roles {get; set;} = new();
+        public List<UserRole> UserRoles {get; set;}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace UserRoleTest.Models
 {
@@ -11,7 +12,8 @@ namespace UserRoleTest.Models
         [Required(ErrorMessage = "Please fill in the Role Name")]
         public string Name {get; set;}
 
-        public List<User> Users {get; set;} = new();
+        [JsonIgnore]
+        public List<UserRole> UserRoles {get; set;}
 
     }
 }

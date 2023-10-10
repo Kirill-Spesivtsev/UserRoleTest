@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UserRoleTest.Helpers;
 using UserRoleTest.Interfaces;
 using UserRoleTest.Models;
 
@@ -19,18 +20,32 @@ namespace UserRoleTest.Controllers
 
 
         [HttpGet]
-        [Route("GetUsers")]
-        public async Task<IActionResult> GetUsers()
+        [Route("GetAllUsers")]
+        public async Task<IActionResult> GetUsers([FromQuery] PaginationOptions paging, [FromQuery] UsersFilteringOptions filters)
         {
             try
             {
+                var pagingFilter = new PaginationOptions(paging.PageNumber, paging.PageSize);
+
+
                 var users = await _userService.GetAllUsers();
-                if (users == null)
+
+                var filtered = users
+                    .Where( i => i.Id.ToString().ToUpper().Contains(filters.Id.ToUpper()))
+                    .Where( n => n.Name.ToUpper().Contains(filters.Name.ToUpper()))
+                    .Where( a => a.Age.ToString().ToUpper().Contains(filters.Age.ToUpper()))
+                    .Where( e => e.Email.ToUpper().Contains(filters.Email.ToUpper()));
+
+                var paged = filtered
+                    .Skip((pagingFilter.PageNumber - 1) * pagingFilter.PageSize)
+                    .Take(pagingFilter.PageSize).ToList();
+
+                if (paged == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(users);
+                return Ok(paged);
             }
             catch (Exception)
             {
@@ -69,40 +84,39 @@ namespace UserRoleTest.Controllers
         public async Task<IActionResult> AddUser([FromBody]User user)
         {
 
-            if (user != null)
+            if (user == null)
             {
-                try
-                {
-                    var users = await _userService.GetAllUsers();
-                    if (users.Any(q => q.Email == user.Email))
-                    {
-                        ModelState.AddModelError("Email", "Email should be unique");
-                    }
-
-                    if (!ModelState.IsValid)
-                    {
-                        return BadRequest(ModelState);
-                    }
-
-                    var userId = await _userService.AddUser(user);
-
-                    if (userId > 0)
-                    {
-                        return Ok(userId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
-
+                return BadRequest(); 
             }
 
-            return BadRequest();
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                if (users.Any(q => q.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email should be unique");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var userId = await _userService.AddUser(user);
+
+                if (userId > 0)
+                {
+                    return Ok(userId);
+                }
+
+                return NotFound();
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
 
         [HttpPost]
@@ -126,7 +140,6 @@ namespace UserRoleTest.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest();
             }
         }
@@ -136,36 +149,64 @@ namespace UserRoleTest.Controllers
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(int? userId, [FromBody]User user)
         {
-            if (userId != null)
+            if (userId == null)
             {
-                try
-                {
-                    var users = await _userService.GetAllUsers();
-                    if (users.Any(q => q.Email == user.Email))
-                    {
-                        ModelState.AddModelError("Email", "Email should be unique");
-                    }
-
-                    if (!ModelState.IsValid)
-                    {
-                        return BadRequest(ModelState);
-                    }
-
-                    var code = await _userService.UpdateUser(userId, user);
-                    if (code == 0)
-                    {
-                        return NotFound();
-                        
-                    }
-                    return Ok();
-                }
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
+                return BadRequest();
             }
 
-            return BadRequest();
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                if (users.Any(q => q.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email should be unique");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var code = await _userService.UpdateUser(userId, user);
+                if (code == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
+
+
+        [HttpPost]
+        [Route("AddUserToRole")]
+        public async Task<IActionResult> AddUserToRole(int? userId, int? roleId)
+        {
+            if (userId == null || roleId == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {     
+                var code = await _userService.AddUserToRole(userId, roleId);
+
+                if (code > 0)
+                {
+                    return Ok();
+                }
+                return NotFound();
+            }
+
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
     }
 }
