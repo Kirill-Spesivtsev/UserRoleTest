@@ -13,22 +13,16 @@ namespace UserRoleTest.Services
             _context = context;
         }
 
-        public async Task<List<User>> GetAllUsers()
-        {
-            if (_context != null)
-            {
-                return await _context.Users.ToListAsync();
-            }
-            return null;
-        }
+        public async Task<List<User>> GetAllUsers() => await _context?.Users?.Include(q => q.Roles)?.ToListAsync()!;
+
 
         public async Task<User> GetUserById(int? userId)
         {
-            if (_context != null)
+            if (_context != null && userId != null)
             {
-                return await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                return await _context.Users.Include(q => q.Roles).FirstAsync(x => x.Id == userId);
             }
-            return null;
+            return null!;
 
         }
 
@@ -64,14 +58,28 @@ namespace UserRoleTest.Services
         }
 
 
-        public async Task UpdateUser(User user)
+        public async Task<int> UpdateUser(int? userId, User user)
         {
             if (_context != null)
             {
-                _context.Users.Update(user);
+                var oldUser = await GetUserById(userId);
+
+                if (oldUser == null)
+                {
+                    return 0;
+                }     
+
+                oldUser.Id = user.Id;
+                oldUser.Name = user.Name;
+                oldUser.Email = user.Email;
+                oldUser.Age = user.Age;
+
+                _context.Users.Update(oldUser);
 
                 await _context.SaveChangesAsync();
             }
+
+            return 1;
         }
 
     }

@@ -9,10 +9,12 @@ namespace UserRoleTest.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
 
@@ -64,13 +66,26 @@ namespace UserRoleTest.Controllers
 
         [HttpPost]
         [Route("AddUser")]
-        public async Task<IActionResult> AddUser([FromBody]User model)
+        public async Task<IActionResult> AddUser([FromBody]User user)
         {
-            if (ModelState.IsValid)
+
+            if (user != null)
             {
                 try
                 {
-                    var userId = await _userService.AddUser(model);
+                    var users = await _userService.GetAllUsers();
+                    if (users.Any(q => q.Email == user.Email))
+                    {
+                        ModelState.AddModelError("Email", "Email should be unique");
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+
+                    var userId = await _userService.AddUser(user);
+
                     if (userId > 0)
                     {
                         return Ok(userId);
@@ -82,7 +97,6 @@ namespace UserRoleTest.Controllers
                 }
                 catch (Exception)
                 {
-
                     return BadRequest();
                 }
 
@@ -120,14 +134,29 @@ namespace UserRoleTest.Controllers
 
         [HttpPost]
         [Route("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody]User model)
+        public async Task<IActionResult> UpdateUser(int? userId, [FromBody]User user)
         {
-            if (ModelState.IsValid)
+            if (userId != null)
             {
                 try
                 {
-                    await _userService.UpdateUser(model);
+                    var users = await _userService.GetAllUsers();
+                    if (users.Any(q => q.Email == user.Email))
+                    {
+                        ModelState.AddModelError("Email", "Email should be unique");
+                    }
 
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+
+                    var code = await _userService.UpdateUser(userId, user);
+                    if (code == 0)
+                    {
+                        return NotFound();
+                        
+                    }
                     return Ok();
                 }
                 catch (Exception)

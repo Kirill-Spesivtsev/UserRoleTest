@@ -13,7 +13,7 @@ namespace UserRoleTest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<User>().HasIndex(i => i.Email).IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
