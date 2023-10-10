@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserRoleTest</name>
+    </assembly>
+    <members>
+        <member name="M:UserRoleTest.Controllers.UserController.GetUsers(UserRoleTest.Helpers.PaginationOptions,UserRoleTest.Helpers.UsersFilteringOptions)">
+            <summary>
+            Получение всех пользователей с фильтрацией
+            </summary>
+            <param name="paging">Параметры пагинации</param>
+            <param name="filters">Фильтры</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.GetUser(System.Nullable{System.Int32})">
+             <summary>
+             Получение пользователя по ID
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                    "id" : 1, 
+                    "name" : "A4Tech Bloody B188",
+                    "price" : 111,
+                    "Type": "PeripheryAndAccessories"
+                 }
+            
+             </remarks> 
+             <param name="userId">ID пользователя</param>
+             <returns></returns>
+             <response code="200">Успешное выполнение</response>
+             <response code="400">Ошибка Запроса API</response>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.AddUser(UserRoleTest.Models.User)">
+            <summary>
+            Создание нового пользователя
+            </summary>
+            <param name="user">Набор свойств пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.DeleteUser(System.Nullable{System.Int32})">
+            <summary>
+            Удаление пользователя
+            </summary>
+            <param name="userId">ID пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.UpdateUser(System.Nullable{System.Int32},UserRoleTest.Models.User)">
+            <summary>
+            Обновление пользователя по ID
+            </summary>
+            <param name="userId"></param>
+            <param name="user">Набор новых свойств пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.AddUserToRole(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Добавление пользователю новой роли
+            </summary>
+            <param name="userId">ID пользователя</param>
+            <param name="roleId">ID роли</param>
+            <returns></returns>
+        </member>
+        <member name="T:UserRoleTest.Migrations.Initial">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:UserRoleTest.Migrations.Migration_3">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_3.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_3.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_3.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:UserRoleTest.Migrations.Migration_4">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_4.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_4.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserRoleTest.Migrations.Migration_4.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

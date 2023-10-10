@@ -18,7 +18,12 @@ namespace UserRoleTest.Controllers
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Получение всех пользователей с фильтрацией
+        /// </summary>
+        /// <param name="paging">Параметры пагинации</param>
+        /// <param name="filters">Фильтры</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllUsers")]
         public async Task<IActionResult> GetUsers([FromQuery] PaginationOptions paging, [FromQuery] UsersFilteringOptions filters)
@@ -53,6 +58,13 @@ namespace UserRoleTest.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение пользователя по ID
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
         [HttpGet]
         [Route("GetUser")]
         public async Task<IActionResult> GetUser(int? userId)
@@ -79,6 +91,13 @@ namespace UserRoleTest.Controllers
             }
         }
 
+        /// <summary>
+        /// Создание нового пользователя
+        /// </summary>
+        /// <param name="user">Набор свойств пользователя</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
         [HttpPost]
         [Route("AddUser")]
         public async Task<IActionResult> AddUser([FromBody]User user)
@@ -119,6 +138,14 @@ namespace UserRoleTest.Controllers
 
         }
 
+
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
         [HttpPost]
         [Route("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int? userId)
@@ -144,7 +171,14 @@ namespace UserRoleTest.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Обновление пользователя по ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="user">Набор новых свойств пользователя</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
         [HttpPost]
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(int? userId, [FromBody]User user)
@@ -164,7 +198,7 @@ namespace UserRoleTest.Controllers
 
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    return BadRequest(new {errors = ModelState});
                 }
 
                 var code = await _userService.UpdateUser(userId, user);
@@ -180,7 +214,14 @@ namespace UserRoleTest.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Добавление пользователю новой роли
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <param name="roleId">ID роли</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
         [HttpPost]
         [Route("AddUserToRole")]
         public async Task<IActionResult> AddUserToRole(int? userId, int? roleId)
