@@ -4,34 +4,47 @@
         <name>UserRoleTest</name>
     </assembly>
     <members>
-        <member name="M:UserRoleTest.Controllers.UserController.GetUsers(UserRoleTest.Helpers.PaginationOptions,UserRoleTest.Helpers.UsersFilteringOptions)">
+        <member name="M:UserRoleTest.Controllers.RoleController.GetRoles(UserRoleTest.Helpers.PaginationOptions,UserRoleTest.Helpers.RolesFilteringOptions,UserRoleTest.Helpers.RolesSortingHelper)">
+            <summary>
+            Получение всех ролей с фильтрацией
+            </summary>
+            <param name="pagingOptions">Параметры пагинации</param>
+            <param name="filterOptions">Фильтры</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
+        </member>
+        <member name="M:UserRoleTest.Controllers.RoleController.GetRole(System.Nullable{System.Int32})">
+            <summary>
+            Получение роли по ID
+            </summary>
+            <param name="roleId">ID роли</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
+        </member>
+        <member name="M:UserRoleTest.Controllers.UserController.GetUsers(UserRoleTest.Helpers.PaginationOptions,UserRoleTest.Helpers.UsersFilteringOptions,UserRoleTest.Helpers.UsersSortingHelper)">
             <summary>
             Получение всех пользователей с фильтрацией
             </summary>
-            <param name="paging">Параметры пагинации</param>
-            <param name="filters">Фильтры</param>
+            <param name="pagingOptions">Параметры пагинации</param>
+            <param name="filterOptions">Фильтры</param>
             <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.GetUser(System.Nullable{System.Int32})">
-             <summary>
-             Получение пользователя по ID
-             </summary>
-             <remarks>
-             Пример запроса:
-            
-                 POST /Todo
-                 {
-                    "id" : 1, 
-                    "name" : "A4Tech Bloody B188",
-                    "price" : 111,
-                    "Type": "PeripheryAndAccessories"
-                 }
-            
-             </remarks> 
-             <param name="userId">ID пользователя</param>
-             <returns></returns>
-             <response code="200">Успешное выполнение</response>
-             <response code="400">Ошибка Запроса API</response>
+            <summary>
+            Получение пользователя по ID
+            </summary>
+            <param name="userId">ID пользователя</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.AddUser(UserRoleTest.Models.User)">
             <summary>
@@ -39,6 +52,9 @@
             </summary>
             <param name="user">Набор свойств пользователя</param>
             <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.DeleteUser(System.Nullable{System.Int32})">
             <summary>
@@ -46,6 +62,9 @@
             </summary>
             <param name="userId">ID пользователя</param>
             <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.UpdateUser(System.Nullable{System.Int32},UserRoleTest.Models.User)">
             <summary>
@@ -54,6 +73,9 @@
             <param name="userId"></param>
             <param name="user">Набор новых свойств пользователя</param>
             <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.AddUserToRole(System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
@@ -62,6 +84,48 @@
             <param name="userId">ID пользователя</param>
             <param name="roleId">ID роли</param>
             <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка Запроса API</response>
+            <response code="404">Ресурс не найден</response>
+        </member>
+        <member name="T:UserRoleTest.Helpers.PaginationOptions">
+            <summary>
+            Инкапсулирует свойства пагинации для коллекции
+            </summary>
+        </member>
+        <member name="T:UserRoleTest.Helpers.RolesFilteringOptions">
+            <summary>
+            Инкапсулирует текстовые параметры для фильтрации коллекции User
+            </summary>
+        </member>
+        <member name="T:UserRoleTest.Helpers.RolesSortingHelper">
+            <summary>
+            Реализует сорировку коллекции типа User по строковым параметрам
+            </summary>
+        </member>
+        <member name="M:UserRoleTest.Helpers.RolesSortingHelper.SortResponse(System.Linq.IQueryable{UserRoleTest.Models.Role})">
+            <summary>
+            Сортирует коллекцию заданного типа по значению поля "SortBy"
+            </summary>
+            <param name="list">Коллекция для сортировки</param>
+            <returns>Отсортированное коллекция</returns>
+        </member>
+        <member name="T:UserRoleTest.Helpers.UsersFilteringOptions">
+            <summary>
+            Инкапсулирует текстовые параметры для фильтрации коллекции User
+            </summary>
+        </member>
+        <member name="T:UserRoleTest.Helpers.UsersSortingHelper">
+            <summary>
+            Реализует сорировку коллекции типа User по строковым параметрам
+            </summary>
+        </member>
+        <member name="M:UserRoleTest.Helpers.UsersSortingHelper.SortResponse(System.Linq.IQueryable{UserRoleTest.Models.User})">
+            <summary>
+            Сортирует коллекцию заданного типа по значению поля "SortBy"
+            </summary>
+            <param name="list">Коллекция для сортировки</param>
+            <returns>Отсортированное коллекция</returns>
         </member>
         <member name="T:UserRoleTest.Migrations.Initial">
             <inheritdoc />

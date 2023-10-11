@@ -1,5 +1,8 @@
 ﻿namespace UserRoleTest.Helpers
 {
+    /// <summary>
+    /// Инкапсулирует свойства пагинации для коллекции
+    /// </summary>
     public class PaginationOptions
     {
         public int PageNumber { get; set; } = 1;

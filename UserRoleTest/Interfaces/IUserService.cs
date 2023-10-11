@@ -1,4 +1,5 @@
-﻿using UserRoleTest.Models;
+﻿using UserRoleTest.Helpers;
+using UserRoleTest.Models;
 
 namespace UserRoleTest.Interfaces
 {
@@ -6,6 +7,11 @@ namespace UserRoleTest.Interfaces
     {
 
         Task<List<User>> GetAllUsers();
+
+        public Task<List<User>> GetAllUsersFiltered(
+            PaginationOptions pagingOptions, 
+            UsersFilteringOptions filterOptions,
+            UsersSortingHelper sortingOptions);
 
         Task<User> GetUserById(int? postId);
 

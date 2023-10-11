@@ -21,40 +21,37 @@ namespace UserRoleTest.Controllers
         /// <summary>
         /// Получение всех пользователей с фильтрацией
         /// </summary>
-        /// <param name="paging">Параметры пагинации</param>
-        /// <param name="filters">Фильтры</param>
+        /// <param name="pagingOptions">Параметры пагинации</param>
+        /// <param name="filterOptions">Фильтры</param>
         /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpGet]
         [Route("GetAllUsers")]
-        public async Task<IActionResult> GetUsers([FromQuery] PaginationOptions paging, [FromQuery] UsersFilteringOptions filters)
+        public async Task<IActionResult> GetUsers(
+            [FromQuery] PaginationOptions pagingOptions, 
+            [FromQuery] UsersFilteringOptions filterOptions,
+            [FromQuery] UsersSortingHelper sortingOptions)
         {
             try
             {
-                var pagingFilter = new PaginationOptions(paging.PageNumber, paging.PageSize);
+                var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
 
 
-                var users = await _userService.GetAllUsers();
+                var filteredUsers = await _userService.GetAllUsersFiltered(pagingOptions, filterOptions, sortingOptions);
 
-                var filtered = users
-                    .Where( i => i.Id.ToString().ToUpper().Contains(filters.Id.ToUpper()))
-                    .Where( n => n.Name.ToUpper().Contains(filters.Name.ToUpper()))
-                    .Where( a => a.Age.ToString().ToUpper().Contains(filters.Age.ToUpper()))
-                    .Where( e => e.Email.ToUpper().Contains(filters.Email.ToUpper()));
 
-                var paged = filtered
-                    .Skip((pagingFilter.PageNumber - 1) * pagingFilter.PageSize)
-                    .Take(pagingFilter.PageSize).ToList();
-
-                if (paged == null)
+                if (filteredUsers == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(paged);
+                return Ok(filteredUsers);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 
@@ -65,6 +62,7 @@ namespace UserRoleTest.Controllers
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpGet]
         [Route("GetUser")]
         public async Task<IActionResult> GetUser(int? userId)
@@ -98,6 +96,7 @@ namespace UserRoleTest.Controllers
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpPost]
         [Route("AddUser")]
         public async Task<IActionResult> AddUser([FromBody]User user)
@@ -146,6 +145,7 @@ namespace UserRoleTest.Controllers
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpPost]
         [Route("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int? userId)
@@ -179,6 +179,7 @@ namespace UserRoleTest.Controllers
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpPost]
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(int? userId, [FromBody]User user)
@@ -222,6 +223,7 @@ namespace UserRoleTest.Controllers
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
+        /// <response code="404">Ресурс не найден</response>
         [HttpPost]
         [Route("AddUserToRole")]
         public async Task<IActionResult> AddUserToRole(int? userId, int? roleId)

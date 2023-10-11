@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UserRoleTest.Data;
+using UserRoleTest.Helpers;
 using UserRoleTest.Interfaces;
 using UserRoleTest.Models;
 
@@ -16,9 +17,30 @@ namespace UserRoleTest.Services
         public async Task<List<User>> GetAllUsers() =>
             await _context?.Users?.Include(q => q.UserRoles).ThenInclude(q => q.Role).ToListAsync()!;
 
+        public async Task<List<User>> GetAllUsersFiltered(
+            PaginationOptions pagingOptions, 
+            UsersFilteringOptions filterOptions,
+            UsersSortingHelper sortingOptions)
+        {
+            var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
+
+            var allUsers = _context?.Users?.Include(q => q.UserRoles).ThenInclude(q => q.Role);
+
+            var filtered = allUsers
+                    .Where( i => i.Id.ToString().ToUpper().Contains(filterOptions.Id.ToUpper()))
+                    .Where( n => n.Name.ToUpper().Contains(filterOptions.Name.ToUpper()))
+                    .Where( a => a.Age.ToString().ToUpper().Contains(filterOptions.Age.ToUpper()))
+                    .Where( e => e.Email.ToUpper().Contains(filterOptions.Email.ToUpper()));
+
+            var sorted = sortingOptions.SortResponse(filtered);
+
+            var paged = sorted
+                .Skip((pagingFilter.PageNumber - 1) * pagingFilter.PageSize)
+                .Take(pagingFilter.PageSize);
             
-
-
+            return await paged.ToListAsync();
+        }
+            
         public async Task<User> GetUserById(int? userId)
         {
             if (_context != null && userId != null)
