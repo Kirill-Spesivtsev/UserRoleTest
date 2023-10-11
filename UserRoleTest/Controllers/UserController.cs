@@ -51,6 +51,8 @@ namespace UserRoleTest.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest(ex);
             }
         }
@@ -67,6 +69,7 @@ namespace UserRoleTest.Controllers
         [Route("GetUser")]
         public async Task<IActionResult> GetUser(int? userId)
         {
+            
             if (userId == null)
             {
                 return BadRequest();
@@ -83,8 +86,10 @@ namespace UserRoleTest.Controllers
 
                 return Ok(user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
         }
@@ -117,7 +122,7 @@ namespace UserRoleTest.Controllers
 
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    return BadRequest(new {errors = ModelState});
                 }
 
                 var userId = await _userService.AddUser(user);
@@ -130,8 +135,10 @@ namespace UserRoleTest.Controllers
                 return NotFound();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
 
@@ -165,8 +172,10 @@ namespace UserRoleTest.Controllers
                 }
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
         }
@@ -209,8 +218,10 @@ namespace UserRoleTest.Controllers
                 }
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
         }
@@ -244,8 +255,10 @@ namespace UserRoleTest.Controllers
                 return NotFound();
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
 

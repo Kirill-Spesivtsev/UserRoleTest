@@ -1,13 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using UserRoleTest.Data;
 using UserRoleTest.Interfaces;
 using UserRoleTest.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+builder.Logging.AddSerilog(logger);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -46,6 +51,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
 
 
 if (app.Environment.IsDevelopment())

@@ -51,6 +51,8 @@ namespace UserRoleTest.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest(ex);
             }
         }
@@ -83,8 +85,10 @@ namespace UserRoleTest.Controllers
 
                 return Ok(user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
                 return BadRequest();
             }
         }
