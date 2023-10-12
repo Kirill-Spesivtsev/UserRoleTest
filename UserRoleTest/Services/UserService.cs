@@ -95,7 +95,7 @@ namespace UserRoleTest.Services
                     return 0;
                 }     
 
-                oldUser.Id = user.Id;
+                oldUser.Id = userId ?? 0;
                 oldUser.Name = user.Name;
                 oldUser.Email = user.Email;
                 oldUser.Age = user.Age;

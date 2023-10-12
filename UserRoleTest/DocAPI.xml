@@ -6,7 +6,7 @@
     <members>
         <member name="M:UserRoleTest.Controllers.AuthController.Login(UserRoleTest.Models.Account)">
             <summary>
-            Реализация аутентификации с помощью JWT
+            Аутентификация с генерацией JWT-токена
             </summary>
             <remarks>
             Для успешной аутентификации необходима предварительная регистрация.
@@ -81,14 +81,24 @@
             <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.AddUser(UserRoleTest.Models.User)">
-            <summary>
-            Создание нового пользователя
-            </summary>
-            <param name="user">Набор свойств пользователя</param>
-            <returns></returns>
-            <response code="200">Успешное выполнение</response>
-            <response code="400">Ошибка Запроса API</response>
-            <response code="404">Ресурс не найден</response>
+             <summary>
+             Создание нового пользователя
+             </summary>
+             <remarks>
+             Пример:
+            
+                 {
+                    "name": "Albert Gram",
+                    "age": 18,
+                    "email": "erbhgfer@gmail.com",
+                 }
+            
+             </remarks>
+             <param name="user">Набор свойств пользователя</param>
+             <returns></returns>
+             <response code="200">Успешное выполнение</response>
+             <response code="400">Ошибка Запроса API</response>
+             <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.DeleteUser(System.Nullable{System.Int32})">
             <summary>
@@ -101,15 +111,25 @@
             <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.UpdateUser(System.Nullable{System.Int32},UserRoleTest.Models.User)">
-            <summary>
-            Обновление пользователя по ID
-            </summary>
-            <param name="userId"></param>
-            <param name="user">Набор новых свойств пользователя</param>
-            <returns></returns>
-            <response code="200">Успешное выполнение</response>
-            <response code="400">Ошибка Запроса API</response>
-            <response code="404">Ресурс не найден</response>
+             <summary>
+             Обновление пользователя по ID
+             </summary>
+             <remarks>
+             Пример:
+            
+                 {
+                    "name": "Albert Gram",
+                    "age": 18,
+                    "email": "erbhgfer@gmail.com",
+                 }
+            
+             </remarks>
+             <param name="userId"></param>
+             <param name="user">Набор новых свойств пользователя</param>
+             <returns></returns>
+             <response code="200">Успешное выполнение</response>
+             <response code="400">Ошибка Запроса API</response>
+             <response code="404">Ресурс не найден</response>
         </member>
         <member name="M:UserRoleTest.Controllers.UserController.AddUserToRole(System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
