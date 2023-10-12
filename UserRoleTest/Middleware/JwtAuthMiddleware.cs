@@ -22,7 +22,7 @@ namespace UserRoleTest.Middleware
         }
 
         /// <summary>
-        /// Проверка хедеров и закрепление токена за контекстом
+        /// Валидация JWT-токена при запросе
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>

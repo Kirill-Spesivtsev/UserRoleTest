@@ -93,6 +93,16 @@ namespace UserRoleTest.Controllers
         /// <summary>
         /// Создание нового пользователя
         /// </summary>
+        /// <remarks>
+        /// Пример:
+        ///
+        ///     {
+        ///        "name": "Albert Gram",
+        ///        "age": 18,
+        ///        "email": "erbhgfer@gmail.com",
+        ///     }
+        ///
+        /// </remarks>
         /// <param name="user">Набор свойств пользователя</param>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
@@ -125,7 +135,7 @@ namespace UserRoleTest.Controllers
 
                 if (userId > 0)
                 {
-                    return Ok(userId);
+                    return Ok(new {message = $"User was created (ID: {userId})"});
                 }
 
                 return BadRequest(new {errors = "Invalid request"});
@@ -166,7 +176,7 @@ namespace UserRoleTest.Controllers
                 {
                     return NotFound(new {errors = "User was not found"});
                 }
-                return Ok();
+                return Ok(new {message = "User was deleted"});
             }
             catch (Exception ex)
             {
@@ -179,6 +189,16 @@ namespace UserRoleTest.Controllers
         /// <summary>
         /// Обновление пользователя по ID
         /// </summary>
+        /// <remarks>
+        /// Пример:
+        ///
+        ///     {
+        ///        "name": "Albert Gram",
+        ///        "age": 18,
+        ///        "email": "erbhgfer@gmail.com",
+        ///     }
+        ///
+        /// </remarks>
         /// <param name="userId"></param>
         /// <param name="user">Набор новых свойств пользователя</param>
         /// <returns></returns>
@@ -197,7 +217,7 @@ namespace UserRoleTest.Controllers
             try
             {
                 var users = await _userService.GetAllUsers();
-                if (users.Any(q => q.Email == user.Email))
+                if (users.Any(q => q.Email == user.Email && q.Id != userId))
                 {
                     ModelState.AddModelError("Email", "Email should be unique");
                 }
@@ -212,7 +232,7 @@ namespace UserRoleTest.Controllers
                 {
                     return NotFound(new {errors = "User was not found"});
                 }
-                return Ok();
+                return Ok(new {message = "User was updated"});
             }
             catch (Exception ex)
             {
@@ -237,7 +257,7 @@ namespace UserRoleTest.Controllers
         {
             if (userId == null || roleId == null)
             {
-                return BadRequest(new {errors = "Invalid request"});
+                return BadRequest(new {errors = "Invalid parameters given"});
             }
 
             try
@@ -246,7 +266,7 @@ namespace UserRoleTest.Controllers
 
                 if (code > 0)
                 {
-                    return Ok();
+                    return Ok("The User was added to Role");
                 }
                 return NotFound(new {errors = "User was not found"});
             }
