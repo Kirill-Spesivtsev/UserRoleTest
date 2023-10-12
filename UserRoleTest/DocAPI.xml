@@ -64,7 +64,8 @@
             Получение всех пользователей с фильтрацией
             </summary>
             <param name="pagingOptions">Параметры пагинации</param>
-            <param name="filterOptions">Фильтры</param>
+            <param name="filterOptions">Параметры фильтрации</param>
+            <param name="sortingOptions">Папаметры сортировки</param>
             <returns></returns>
             <response code="200">Успешное выполнение</response>
             <response code="400">Ошибка Запроса API</response>
@@ -183,7 +184,7 @@
         </member>
         <member name="M:UserRoleTest.Middleware.JwtAuthMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
-            Проверка хедеров и закрепление токена за контекстом
+            Валидация JWT-токена при запросе
             </summary>
             <param name="context"></param>
             <returns></returns>

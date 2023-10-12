@@ -1,17 +1,47 @@
-﻿namespace UserRoleTest.Helpers
+﻿using System.Text.Json;
+
+namespace UserRoleTest.Helpers
 {
     /// <summary>
     /// Инкапсулирует свойства пагинации для коллекции
     /// </summary>
     public class PaginationOptions
     {
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 20;
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+
+        public int TotalElements;
+
+        public int TotalPages;
+
+        public bool HasPrevious;
+
+        public bool HasNext;
+
         public PaginationOptions(){}
-        public PaginationOptions(int pageNumber, int pageSize)
+        public PaginationOptions(int pageNumber, int pageSize, int totalCount)
         {
-            this.PageNumber = pageNumber < 1 ? 1 : pageNumber;
-            this.PageSize = pageSize < 1 ? 20 : pageSize;
+            CurrentPage = pageNumber < 1 ? 1 : pageNumber;
+            PageSize = pageSize < 1 ? 200 : pageSize;
+            TotalElements = totalCount;
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            HasPrevious = CurrentPage > 1;
+            HasNext = CurrentPage < PageSize;
+        }
+
+        public string GetSerializedMetadata()
+        {
+            var metadata = new
+            {
+                TotalElements,
+                PageSize,
+                CurrentPage,
+                TotalPages,
+                HasNext,
+                HasPrevious
+            };
+            
+            return JsonSerializer.Serialize(metadata);
         }
     }
 }

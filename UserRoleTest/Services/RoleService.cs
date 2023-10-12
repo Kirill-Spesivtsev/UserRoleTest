@@ -21,8 +21,6 @@ namespace UserRoleTest.Services
             RolesFilteringOptions filterOptions,
             RolesSortingHelper sortingOptions)
         {
-            var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
-
             var allRoles = _context?.Roles;
 
             var filtered = allRoles?
@@ -31,8 +29,11 @@ namespace UserRoleTest.Services
 
             var sorted = sortingOptions.SortResponse(filtered);
 
+            int amount = sorted.Count();
+            var pagingFilter = new PaginationOptions(pagingOptions.CurrentPage, pagingOptions.PageSize, amount);
+
             var paged = sorted
-                .Skip((pagingFilter.PageNumber - 1) * pagingFilter.PageSize)
+                .Skip((pagingFilter.CurrentPage - 1) * pagingFilter.PageSize)
                 .Take(pagingFilter.PageSize);
             
             return await paged.ToListAsync();

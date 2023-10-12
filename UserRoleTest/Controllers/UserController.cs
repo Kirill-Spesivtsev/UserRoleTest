@@ -22,7 +22,8 @@ namespace UserRoleTest.Controllers
         /// Получение всех пользователей с фильтрацией
         /// </summary>
         /// <param name="pagingOptions">Параметры пагинации</param>
-        /// <param name="filterOptions">Фильтры</param>
+        /// <param name="filterOptions">Параметры фильтрации</param>
+        /// <param name="sortingOptions">Папаметры сортировки</param>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка Запроса API</response>
@@ -36,12 +37,12 @@ namespace UserRoleTest.Controllers
         {
             try
             {
-                var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
-
+                var pagingData = pagingOptions;
 
                 var filteredUsers = await _userService
-                    .GetAllUsersFiltered(pagingOptions, filterOptions, sortingOptions);
+                    .GetAllUsersFiltered(pagingData, filterOptions, sortingOptions);
 
+                Response.Headers.Add("X-Pagination", pagingData.GetSerializedMetadata());
 
                 return Ok(filteredUsers);
             }

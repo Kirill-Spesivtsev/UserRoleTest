@@ -36,9 +36,11 @@ namespace UserRoleTest.Controllers
         {
             try
             {
-                var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
+                var pagingData = pagingOptions;
 
                 var filteredRoles = await _roleService.GetAllRolesFiltered(pagingOptions, filterOptions, sortingOptions);
+
+                Response.Headers.Add("X-Pagination", pagingData.GetSerializedMetadata());
 
                 return Ok(filteredRoles);
             }
