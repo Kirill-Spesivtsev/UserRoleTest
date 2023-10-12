@@ -39,13 +39,9 @@ namespace UserRoleTest.Controllers
                 var pagingFilter = new PaginationOptions(pagingOptions.PageNumber, pagingOptions.PageSize);
 
 
-                var filteredUsers = await _userService.GetAllUsersFiltered(pagingOptions, filterOptions, sortingOptions);
+                var filteredUsers = await _userService
+                    .GetAllUsersFiltered(pagingOptions, filterOptions, sortingOptions);
 
-
-                if (filteredUsers == null)
-                {
-                    return NotFound();
-                }
 
                 return Ok(filteredUsers);
             }
@@ -53,7 +49,7 @@ namespace UserRoleTest.Controllers
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest(ex);
+                return BadRequest(new {errors = "Invalid request"});
             }
         }
 
@@ -72,7 +68,7 @@ namespace UserRoleTest.Controllers
             
             if (userId == null)
             {
-                return BadRequest();
+                return BadRequest(new {errors = "User id was not entered" });
             }
 
             try
@@ -81,7 +77,7 @@ namespace UserRoleTest.Controllers
 
                 if (user == null)
                 {
-                    return NotFound();
+                    return NotFound(new {errors = "User was not found" });
                 }
 
                 return Ok(user);
@@ -90,7 +86,7 @@ namespace UserRoleTest.Controllers
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request" });
             }
         }
 
@@ -109,7 +105,7 @@ namespace UserRoleTest.Controllers
 
             if (user == null)
             {
-                return BadRequest(); 
+                return BadRequest(new {errors = "User data was not entered"}); 
             }
 
             try
@@ -132,14 +128,14 @@ namespace UserRoleTest.Controllers
                     return Ok(userId);
                 }
 
-                return NotFound();
+                return BadRequest(new {errors = "Invalid request"});
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
 
         }
@@ -160,7 +156,7 @@ namespace UserRoleTest.Controllers
 
             if (userId == null)
             {
-                return BadRequest();
+                return BadRequest(new {errors = "User id was not entered"});
             }
 
             try
@@ -168,7 +164,7 @@ namespace UserRoleTest.Controllers
                 int result = await _userService.DeleteUser(userId);
                 if (result == 0)
                 {
-                    return NotFound();
+                    return NotFound(new {errors = "User was not found"});
                 }
                 return Ok();
             }
@@ -176,7 +172,7 @@ namespace UserRoleTest.Controllers
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
         }
 
@@ -195,7 +191,7 @@ namespace UserRoleTest.Controllers
         {
             if (userId == null)
             {
-                return BadRequest();
+                return BadRequest(new {errors = "User id was not entered"});
             }
 
             try
@@ -214,7 +210,7 @@ namespace UserRoleTest.Controllers
                 var code = await _userService.UpdateUser(userId, user);
                 if (code == 0)
                 {
-                    return NotFound();
+                    return NotFound(new {errors = "User was not found"});
                 }
                 return Ok();
             }
@@ -222,7 +218,7 @@ namespace UserRoleTest.Controllers
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
         }
 
@@ -241,7 +237,7 @@ namespace UserRoleTest.Controllers
         {
             if (userId == null || roleId == null)
             {
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
 
             try
@@ -252,14 +248,14 @@ namespace UserRoleTest.Controllers
                 {
                     return Ok();
                 }
-                return NotFound();
+                return NotFound(new {errors = "User was not found"});
             }
 
             catch (Exception ex)
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
 
         }

@@ -71,7 +71,7 @@ namespace UserRoleTest.Controllers
         {
             if (roleId == null)
             {
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
 
             try
@@ -80,7 +80,7 @@ namespace UserRoleTest.Controllers
 
                 if (user == null)
                 {
-                    return NotFound();
+                    return NotFound(new {errors = "Role was not found"});
                 }
 
                 return Ok(user);
@@ -89,7 +89,7 @@ namespace UserRoleTest.Controllers
             {
                 _logger.LogError(ex,
                     $"Request '{HttpContext.Request?.Method} {HttpContext.Request?.Path.Value}' failed. \n");
-                return BadRequest();
+                return BadRequest(new {errors = "Invalid request"});
             }
         }
 
