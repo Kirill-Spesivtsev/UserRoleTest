@@ -13,7 +13,7 @@ namespace UserRoleTest.Models
         public string Name {get; set;}
 
         [JsonIgnore]
-        public List<UserRole> UserRoles {get; set;} = new();
+        public List<User> Users {get; set;} = new();
 
     }
 }

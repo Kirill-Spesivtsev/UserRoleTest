@@ -37,12 +37,10 @@ namespace UserRoleTest.Controllers
         {
             try
             {
-                var pagingData = pagingOptions;
-
                 var filteredUsers = await _userService
-                    .GetAllUsersFiltered(pagingData, filterOptions, sortingOptions);
+                    .GetAllUsersFiltered(pagingOptions, filterOptions, sortingOptions);
 
-                Response.Headers.Add("X-Pagination", pagingData.GetSerializedMetadata());
+                Response.Headers.Add("X-Pagination", pagingOptions.GetSerializedMetadata());
 
                 return Ok(filteredUsers);
             }
@@ -100,7 +98,7 @@ namespace UserRoleTest.Controllers
         ///     {
         ///        "name": "Albert Gram",
         ///        "age": 18,
-        ///        "email": "erbhgfer@gmail.com",
+        ///        "email": "erbhgfer@gmail.com"
         ///     }
         ///
         /// </remarks>
@@ -196,7 +194,7 @@ namespace UserRoleTest.Controllers
         ///     {
         ///        "name": "Albert Gram",
         ///        "age": 18,
-        ///        "email": "erbhgfer@gmail.com",
+        ///        "email": "erbhgfer@gmail.com"
         ///     }
         ///
         /// </remarks>

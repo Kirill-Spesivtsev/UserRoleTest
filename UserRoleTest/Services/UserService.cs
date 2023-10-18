@@ -15,14 +15,14 @@ namespace UserRoleTest.Services
         }
 
         public async Task<List<User>> GetAllUsers() =>
-            await _context?.Users?.Include(q => q.UserRoles).ThenInclude(q => q.Role).ToListAsync()!;
+            await _context?.Users?.Include(q => q.Roles).ToListAsync()!;
 
         public async Task<List<User>> GetAllUsersFiltered(
             PaginationOptions pagingOptions, 
             UsersFilteringOptions filterOptions,
             UsersSortingHelper sortingOptions)
         {
-            var allUsers = _context?.Users?.Include(q => q.UserRoles).ThenInclude(q => q.Role);
+            var allUsers = _context?.Users?.Include(q => q.Roles);
 
             var filtered = allUsers
                     .Where( i => i.Id.ToString().ToUpper().Contains(filterOptions.Id.ToUpper()))
@@ -47,7 +47,7 @@ namespace UserRoleTest.Services
             if (_context != null && userId != null)
             {
                 return await _context.Users
-                    .Include(q => q.UserRoles).ThenInclude(q => q.Role).FirstAsync(x => x.Id == userId);
+                    .Include(q => q.Roles).FirstAsync(x => x.Id == userId);
             }
             return null!;
 
@@ -113,10 +113,10 @@ namespace UserRoleTest.Services
         {
             if (_context != null)
             {
-                var record = new UserRole{UserId = userId.Value, RoleId = roleId.Value};
-                await _context.UserRoles.AddAsync(record);
-                await _context.SaveChangesAsync();
-                return record.Id;
+                var role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                user.Roles.Add(role);
+                return await _context.SaveChangesAsync();
             }
             return 0;
         }

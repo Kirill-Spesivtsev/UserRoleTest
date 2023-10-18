@@ -6,6 +6,10 @@ namespace UserRoleTest.Data
 
     public class ApplicationDbContext: DbContext
     {
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+
         public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
@@ -15,12 +19,8 @@ namespace UserRoleTest.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(i => i.Email).IsUnique();
+   
         }
 
-        
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<Account> Accounts { get; set; }
     }
 }

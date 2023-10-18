@@ -11,8 +11,8 @@ using UserRoleTest.Data;
 namespace UserRoleTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231008180824_Initial")]
-    partial class Initial
+    [Migration("20231018094859_Migration_1")]
+    partial class Migration_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,20 @@ namespace UserRoleTest.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("RoleUser");
+                });
+
+            modelBuilder.Entity("UserRoleTest.Models.Account", b =>
+                {
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserName");
+
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("UserRoleTest.Models.Role", b =>
@@ -69,13 +83,16 @@ namespace UserRoleTest.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

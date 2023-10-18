@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 using UserRoleTest.Data;
+using UserRoleTest.Helpers;
 using UserRoleTest.Interfaces;
 using UserRoleTest.Middleware;
 using UserRoleTest.Services;
@@ -115,5 +116,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await DbInitializerHelper.Seed(app);
 
 app.Run();

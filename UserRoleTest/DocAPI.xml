@@ -91,7 +91,7 @@
                  {
                     "name": "Albert Gram",
                     "age": 18,
-                    "email": "erbhgfer@gmail.com",
+                    "email": "erbhgfer@gmail.com"
                  }
             
              </remarks>
@@ -121,7 +121,7 @@
                  {
                     "name": "Albert Gram",
                     "age": 18,
-                    "email": "erbhgfer@gmail.com",
+                    "email": "erbhgfer@gmail.com"
                  }
             
              </remarks>
@@ -196,64 +196,16 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="T:UserRoleTest.Migrations.Initial">
+        <member name="T:UserRoleTest.Migrations.Migration_1">
             <inheritdoc />
         </member>
-        <member name="M:UserRoleTest.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:UserRoleTest.Migrations.Migration_1.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:UserRoleTest.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:UserRoleTest.Migrations.Migration_1.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:UserRoleTest.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_Added_User_Model_Requirements.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:UserRoleTest.Migrations.Migration_3">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_3.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_3.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_3.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:UserRoleTest.Migrations.Migration_4">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_4.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_4.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_4.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:UserRoleTest.Migrations.Migration_5">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_5.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_5.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:UserRoleTest.Migrations.Migration_5.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:UserRoleTest.Migrations.Migration_1.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

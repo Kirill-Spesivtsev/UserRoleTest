@@ -43,8 +43,7 @@ namespace UserRoleTest.Services
         {
             if (_context != null && roleId != null)
             {
-                return await _context.Roles
-                    .Include(q => q.UserRoles).ThenInclude(q => q.Role).FirstAsync(x => x.Id == roleId);
+                return await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
             }
             return null!;
 
